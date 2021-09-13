@@ -1,24 +1,22 @@
 import React from "react";
 import "./App.css";
-import { reducerFn, ReducerFnType, ReducerHookType, State } from "./ReducerFn";
-
-const initialState: State = {
-  strings: [],
-};
+import { State } from "./ReducerFn";
+import { DefaultRootState, useSelector } from "react-redux";
+import { store } from "./store";
 
 function App() {
-  const [myState, myDispatcher]: ReducerHookType =
-    React.useReducer<ReducerFnType>(reducerFn, initialState);
+  const state: DefaultRootState = useSelector((state) => state);
+  const myState = state as State;
 
   function addString() {
-    myDispatcher({
+    store.dispatch({
       type: "add",
-      payload: "blabablaabla".substring(Math.floor(Math.random() * 11)),
+      payload: "NazmulMaretIdris".substring(Math.floor(Math.random() * 15)),
     });
   }
 
   function removeListItem(index: number) {
-    myDispatcher({
+    store.dispatch({
       type: "remove",
       payload: index,
     });

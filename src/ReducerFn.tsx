@@ -1,11 +1,23 @@
-import React, { Dispatch } from "react";
+import React from "react";
+import { Reducer } from "@reduxjs/toolkit";
 
-export type ReducerFnType = React.Reducer<State, Action>;
-export type ReducerHookType = [State, Dispatch<Action>];
-export const reducerFn: ReducerFnType = (
-  state: State,
-  action: Action
-): State => {
+export type State = {
+  strings: Array<string>;
+};
+type Action = {
+  type: "add" | "remove" | "clear";
+  payload?: any;
+};
+
+export const reducerFn: Reducer<State | undefined, Action> = (
+  state,
+  action
+): State | undefined => {
+  if (!state)
+    return {
+      strings: ["11222", "ddddd"],
+    };
+
   switch (action.type) {
     case "add":
       return { strings: [...state.strings, action.payload] };
@@ -19,11 +31,4 @@ export const reducerFn: ReducerFnType = (
       return { strings: copyOfState };
   }
   return state;
-};
-export type State = {
-  strings: Array<string>;
-};
-type Action = {
-  type: "add" | "remove" | "clear";
-  payload?: any;
 };
